@@ -13,8 +13,8 @@ fi
 {%- if DOCKER_NETWORKS is defined -%}{% set NETWORKS = DOCKER_NETWORKS.split('\t') %}{% endif %}
 
 source $SCRIPT_PATH/config/require.sh
-{% if REQUIRED is defined -%}{% for CONTAINER in REQUIRED %}isContainerRunning "{{ CONTAINER }}"
-{% endfor %}{%- endif %}
+{% if REQUIRED is defined -%}{% for CONTAINER in REQUIRED %}{% if CONTAINER %}isContainerRunning "{{ CONTAINER }}"
+{% endif %}{% endfor %}{%- endif %}
 docker_name="{{ CONTAINER_GROUP }}.{{ DOCKER_NAME }}"
 image="{% if DOCKER_REG is defined %}{{ DOCKER_REG }}/{% endif %}{% if DOCKER_USER is defined %}{{ DOCKER_USER }}/{% endif %}{{ DOCKER_IMG }}{% if DOCKER_VERSION is defined %}:{{ DOCKER_VERSION }}{% endif %}"
 

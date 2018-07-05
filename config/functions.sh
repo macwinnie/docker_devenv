@@ -169,3 +169,10 @@ controllNetwork() {
         docker network connect "$1" "$2" >/dev/null 2>&1
     fi
 }
+
+inArray () {
+    local e match="$1"
+    shift
+    for e; do [[ "$e" == "$match" ]] && return 0; done
+    return 1
+}

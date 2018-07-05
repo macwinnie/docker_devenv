@@ -98,7 +98,7 @@ if ask 'Do you want to define another restart policy than `always`? (n)' N; then
                     break
                     ;;
                 *)
-                    if [ inArray $options $opt ]; then
+                    if inArray "$opt" "${options[@]}"; then
                         setVar "DOCKER_RESTART" "$opt"
                     else
                         echotask "Okay, we won't set this so the Docker default will be taken."
