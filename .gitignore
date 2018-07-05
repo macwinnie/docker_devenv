@@ -1,0 +1,7 @@
+src
+container/*/*.sh
+!container/system/traefik.sh
+!container/system/database.sh
+!container/system/phpmyadmin.sh
+!container/system/portainer.sh
+config/networks

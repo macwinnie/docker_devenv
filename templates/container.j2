@@ -1,0 +1,49 @@
+#!/bin/bash
+
+if [ -z ${SCRIPT_PATH+x} ]; then
+    echo "do not run this script directly!"
+    exit 1
+fi
+{%- if DOCKER_ENVS is defined -%}{% set ENVS = DOCKER_ENVS.split('\t') %}{% endif %}
+{%- if DOCKER_PORTS is defined -%}{% set PORTS = DOCKER_PORTS.split('\t') %}{% endif %}
+{%- if DOCKER_LABELS is defined -%}{% set LABELS = DOCKER_LABELS.split('\t') %}{% endif %}
+{%- if DOCKER_MOUNTS is defined -%}{% set MOUNTS = DOCKER_MOUNTS.split('\t') %}{% endif %}
+{%- if DOCKER_REQUIRE is defined -%}{% set REQUIRED = DOCKER_REQUIRE.split('\t') %}{% endif %}
+{%- if DOCKER_VOLUMES is defined -%}{% set VOLUMES = DOCKER_VOLUMES.split('\t') %}{% endif %}
+{%- if DOCKER_NETWORKS is defined -%}{% set NETWORKS = DOCKER_NETWORKS.split('\t') %}{% endif %}
+
+source $SCRIPT_PATH/config/require.sh
+{% if REQUIRED is defined -%}{% for CONTAINER in REQUIRED %}isContainerRunning "{{ CONTAINER }}"
+{% endfor %}{%- endif %}
+docker_name="{{ CONTAINER_GROUP }}.{{ DOCKER_NAME }}"
+image="{% if DOCKER_REG is defined %}{{ DOCKER_REG }}/{% endif %}{% if DOCKER_USER is defined %}{{ DOCKER_USER }}/{% endif %}{{ DOCKER_IMG }}{% if DOCKER_VERSION is defined %}:{{ DOCKER_VERSION }}{% endif %}"
+
+{% if TRAEFIK_HOST is defined %}local_domain='{{ TRAEFIK_HOST }}'
+register_host $local_domain
+{% endif %}
+
+{%- if VOLUMES is defined %}
+{% for VOL in VOLUMES %}{%- if VOL %}createVolume {{ VOL }} $docker_name{% endif %}
+{% endfor %}{%- endif %}
+if checkRunning "$docker_name"; then
+    docker pull $image
+    docker run --detach \
+      --name $docker_name \
+    {%- if DOCKER_RESTART is defined %}
+      --restart {{ DOCKER_RESTART }} \
+    {% endif %}
+    {%- if DOCKER_ALL_EXPOSED is defined %}  -P \
+    {% endif %}
+    {%- if PORTS is defined -%}{% for PORT in PORTS %}  -p {{ PORT }} \
+    {% endfor %}{% endif %}
+    {%- if DOCKER_PRIVILEGED is defined %}  --privileged=true \
+    {% endif %}
+    {%- if MOUNTS is defined -%}{% for VOL in MOUNTS %}  --volume {{ VOL }} \
+    {% endfor %}{% endif %}
+    {%- if ENVS is defined -%}{% for ENV in ENVS %}  --env {{ ENV }} \
+    {% endfor %}{% endif %}
+    {%- if LABELS is defined -%}{% for label in LABELS %}  --label {{ label }} \
+    {% endfor %}{% endif %}  $image
+    {% if NETWORKS is defined %}{% for NW in NETWORKS %}
+    controllNetwork "{{ NW }}" "$docker_name"{% endfor %}{%- endif %}
+fi
