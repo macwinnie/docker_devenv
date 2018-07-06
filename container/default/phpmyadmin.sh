@@ -21,7 +21,7 @@ if checkRunning "$docker_name"; then
     docker run --detach \
       --name $docker_name \
       --restart always \
-      --volume $DATA_PATH/system/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro \
+      --volume $DATA_PATH/default/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro \
       --env PMA_HOST=database \
       --env PMA_USER=root \
       --env PMA_PASSWORD=Def12345 \

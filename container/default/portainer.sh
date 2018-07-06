@@ -21,7 +21,7 @@ if checkRunning "$docker_name"; then
       --name $docker_name \
       --restart always \
       --volume /var/run/docker.sock:/var/run/docker.sock:rw \
-      --volume $DATA_PATH/system/portainer/data:/data:rw \
+      --volume $DATA_PATH/default/portainer/data:/data:rw \
       --label traefik.frontend.rule="Host:$local_domain" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
