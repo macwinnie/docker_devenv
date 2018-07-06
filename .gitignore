@@ -2,6 +2,6 @@ src
 container/*/*.sh
 !container/system/traefik.sh
 !container/system/database.sh
-!container/system/phpmyadmin.sh
-!container/system/portainer.sh
+!container/default/phpmyadmin.sh
+!container/default/portainer.sh
 config/networks
