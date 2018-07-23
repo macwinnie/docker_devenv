@@ -87,7 +87,7 @@ getContainerGroups() {
     containergroups=()
     while IFS= read -r -d $'\0' f; do
         containergroups[i++]=$( echo "$f" | sed -e "s|^$CONTAINER_PATH/||" )
-    done < <(find $CONTAINER_PATH -mindepth 1 -maxdepth 1 -type d -print0 )
+    done < <(find $CONTAINER_PATH -mindepth 1 -maxdepth 1 -type d -print0 | sort -z)
 }
 
 containers=()
@@ -96,7 +96,7 @@ getContainers() {
     containers=()
     while IFS= read -r -d $'\0' f; do
         containers[i++]=$( echo "$f" | sed -e "s|^$CONTAINER_PATH$1/||" | sed -e "s|$CONTAINER_SUFFIX$||" )
-    done < <(find $CONTAINER_PATH$1 -name \*$CONTAINER_SUFFIX -mindepth 1 -maxdepth 1 -type f -print0)
+    done < <(find $CONTAINER_PATH$1 -name \*$CONTAINER_SUFFIX -mindepth 1 -maxdepth 1 -type f -print0 | sort -z)
 }
 
 listOfNetworks=()
