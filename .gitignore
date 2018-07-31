@@ -5,3 +5,5 @@ container/*/*.sh
 !container/default/phpmyadmin.sh
 !container/default/portainer.sh
 config/networks
+persistentdata
+!persistentdata/.gitadd
