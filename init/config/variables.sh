@@ -8,7 +8,7 @@ fi
 CONTAINER_SUFFIX=".sh"
 
 CONTAINER_PATH=$SCRIPT_PATH"/container/"
-DATA_PATH=$SCRIPT_PATH"/../container/"
+DATA_PATH=$SCRIPT_PATH"/../persistentdata/"
 
 NETWORKS_FILE=$SCRIPT_PATH"/config/networks"
 NETWORK_DATABASE='internal'

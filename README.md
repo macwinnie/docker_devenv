@@ -18,26 +18,32 @@ Required are:
 ./
 ├── README.md
 │
-├── config        # holds definition files for all other scripts
+├── images            # within this folder, you should prepare your image definitions
 │
-├── container     # subfolders are `categories`, bejond them the
-│   │             # definition files for containers are sorted
-│   ├── default
-│   └── system
-│       ├── database.sh    # `system.database`
-│       │                  #    is a MariaDB container
-│       ├── phpmyadmin.sh  # `system.phpmyadmin`
-│       │                  #    provides a PMA instance
-│       ├── portainer.sh   # `system.portainer`
-│       │                  #    provide Porainer instance
-│       └── traefik.sh     # `system.traefik`
-│                          #    manages HTTP(S) Requests as reverse proxy
+├── init              # the actual script part of this repository
+│   │
+│   ├── config        # holds definition files for all other scripts
+│   │
+│   ├── container     # subfolders are `categories`, bejond them the
+│   │   │             # definition files for containers are sorted
+│   │   ├── default
+│   │   └── system
+│   │       ├── database.sh    # `system.database`
+│   │       │                  #    is a MariaDB container
+│   │       ├── phpmyadmin.sh  # `system.phpmyadmin`
+│   │       │                  #    provides a PMA instance
+│   │       ├── portainer.sh   # `system.portainer`
+│   │       │                  #    provide Porainer instance
+│   │       └── traefik.sh     # `system.traefik`
+│   │                          #    manages HTTP(S) Requests as reverse proxy
+│   │
+│   ├── create.sh     # script for creation of new definition files
+│   │
+│   ├── manage.sh     # script for managing containers
+│   │
+│   └── templates     # folder for Jinja2 templates used by scripts
 │
-├── create.sh     # script for creation of new definition files
-│
-├── manage.sh     # script for managing containers
-│
-└── templates     # folder for Jinja2 templates used by scripts
+└── persistentdata    # the folder our persistent container data will be hold
 ```
 
 ## How to use

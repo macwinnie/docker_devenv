@@ -10,7 +10,9 @@ source $SCRIPT_PATH/config/require.sh
 isContainerRunning "system/traefik"
 isContainerRunning "system/database"
 
-docker_name="default.phpmyadmin"
+cnt_group="default"
+cnt_name="phpmyadmin"
+docker_name="$cnt_group.$cnt_name"
 image="phpmyadmin/phpmyadmin"
 
 local_domain='pma.local'
@@ -21,7 +23,7 @@ if checkRunning "$docker_name"; then
     docker run --detach \
       --name $docker_name \
       --restart always \
-      --volume $DATA_PATH/default/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro \
       --env PMA_HOST=database \
       --env PMA_USER=root \
       --env PMA_PASSWORD=Def12345 \

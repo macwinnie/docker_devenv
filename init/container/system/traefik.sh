@@ -7,7 +7,9 @@ fi
 
 source $SCRIPT_PATH/config/require.sh
 
-docker_name="system.traefik"
+cnt_group="system"
+cnt_name="traefik"
+docker_name="$cnt_group.$cnt_name"
 image="traefik"
 
 local_domain='traefik.local'
@@ -15,7 +17,7 @@ register_host $local_domain
 
 if checkRunning $docker_name; then
 
-    tomlPath="$DATA_PATH"'system/traefik'
+    tomlPath="$DATA_PATH$cnt_group/$cnt_name"
     tomlFile=$tomlPath'/traefik.toml'
     if [ ! -f "$tomlFile" ]; then
         mkdir -p "$tomlPath"
@@ -29,11 +31,11 @@ if checkRunning $docker_name; then
       --restart always \
       -p 80:80 \
       --volume /var/run/docker.sock:/var/run/docker.sock:rw \
-      --volume $DATA_PATH/system/traefik/traefik.toml:/traefik.toml:ro \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/traefik.toml:/traefik.toml:ro \
       --label traefik.frontend.rule="Host:$local_domain" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
-      --label traefik.backend="system: traefik" \
+      --label traefik.backend="system: Traefik" \
       --label traefik.port=8080 \
       $image --docker
 

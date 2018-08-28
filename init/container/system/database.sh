@@ -7,7 +7,9 @@ fi
 
 source $SCRIPT_PATH/config/require.sh
 
-docker_name="system.database"
+cnt_group="system"
+cnt_name="database"
+docker_name="$cnt_group.$cnt_name"
 image="mariadb"
 
 if checkRunning "$docker_name"; then
@@ -29,8 +31,8 @@ if checkRunning "$docker_name"; then
       -p 3306:3306 \
       --network $NETWORK_DATABASE \
       --network-alias='database' \
-      --volume $DATA_PATH/system/database/data:/var/lib/mysql:rw \
-      --volume $DATA_PATH/system/database/config:/etc/mysql/conf.d/:ro \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/data:/var/lib/mysql:rw \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/config:/etc/mysql/conf.d/:ro \
       --env MYSQL_ROOT_PASSWORD="Def12345" \
       --label traefik.enable=false \
       $image
