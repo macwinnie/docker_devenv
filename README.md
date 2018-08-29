@@ -58,7 +58,7 @@ For creating a new definition file, you can simply run `./create.sh` within the 
 
 ### Manage container
 
-Managing containers is easy through the `./manage.sh` script. The container definiton files are sorted by so called categories for some structure. The resulting container is named after the shema `category.container`.
+Managing containers is easy through the `./manage.sh` script. The container definition files are sorted by so called categories for some structure. The resulting container is named after the schema `category.container`.
 
 ### Aliasing on the terminal
 

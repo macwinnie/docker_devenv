@@ -176,3 +176,21 @@ inArray () {
     for e; do [[ "$e" == "$match" ]] && return 0; done
     return 1
 }
+
+askForPull() {
+    if ask 'Should newest images automatically be pulled? (y)' Y; then
+        PULL_IMAGES='yes'
+    else
+        PULL_IMAGES='no'
+    fi
+    export PULL_IMAGES
+}
+
+pullImage() {
+    if [[ "$PULL_IMAGES" == "yes" ]]; then
+        docker pull "$1"
+        echo 'yes, I pulled'
+    else
+        echo "no, I won't pull"
+    fi
+}

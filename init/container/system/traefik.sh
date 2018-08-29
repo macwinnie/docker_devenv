@@ -25,7 +25,7 @@ if checkRunning $docker_name; then
         j2 $SCRIPT_PATH/templates/traefik.toml.j2 > $tomlFile
     fi
 
-    docker pull $image
+    pullImage $image
     docker run --detach \
       --name $docker_name \
       --restart always \

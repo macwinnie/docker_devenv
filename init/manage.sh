@@ -3,6 +3,7 @@
 SCRIPT_PATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source $SCRIPT_PATH/config/require.sh
 
+askForPull
 useGroups() {
     echotask "Please select the group you want to start container(s) from:"
     getContainerGroups
