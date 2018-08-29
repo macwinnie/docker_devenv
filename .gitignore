@@ -10,3 +10,4 @@ persistentdata
 !persistentdata/.gitadd
 images
 !images/.gitadd
+old.*

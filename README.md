@@ -59,3 +59,29 @@ For creating a new definition file, you can simply run `./create.sh` within the 
 ### Manage container
 
 Managing containers is easy through the `./manage.sh` script. The container definiton files are sorted by so called categories for some structure. The resulting container is named after the shema `category.container`.
+
+### Aliasing on the terminal
+
+Since one does not always want to change directory to this repository if one wants to manage docker containers, these bash commands could help you to create aliases for working with these scripts – assuming you are in the root of this project:
+
+#### Linux
+```sh
+DEF_DST="$( cd ; pwd -P )/.profile"
+SCRIPT_PATH="$( pwd -P )/init/"
+sed -i '/alias cntmanage=/d' $DEF_DST
+sed -i '/alias cntcreate=/d' $DEF_DST
+echo "alias cntmanage='${SCRIPT_PATH}manage.sh'" >> $DEF_DST
+echo "alias cntcreate='${SCRIPT_PATH}create.sh'" >> $DEF_DST
+```
+
+#### MacOS
+```sh
+DEF_DST="$( cd ; pwd -P )/.profile"
+SCRIPT_PATH="$( pwd -P )/init/"
+sed -i '' '/alias cntmanage=/d' $DEF_DST
+sed -i '' '/alias cntcreate=/d' $DEF_DST
+echo "alias cntmanage='${SCRIPT_PATH}manage.sh'" >> $DEF_DST
+echo "alias cntcreate='${SCRIPT_PATH}create.sh'" >> $DEF_DST
+```
+
+ATTENTION: you probably have to adjust the `DEF_DST` variable to match your preferred destination for the aliases – i.e. `~/.zprofile` if you are using `zsh`.
