@@ -191,8 +191,5 @@ askForPull() {
 pullImage() {
     if [[ "$PULL_IMAGES" == "yes" ]]; then
         docker pull "$1"
-        echo 'yes, I pulled'
-    else
-        echo "no, I won't pull"
     fi
 }
