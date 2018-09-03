@@ -55,6 +55,8 @@ register_host() {
         for i in "${hosts[@]}"; do
             pattern="127.0.0.1  $i"
             if ! grep -q "$pattern" /etc/hosts; then
+                 echo -e "\033[31mSince we need to edit your /etc/hosts file, you probably will"
+                 echo -e "be asked to enter your SUDO-Password now ... \033[0m"
                  sudo bash -c "echo \"$pattern\" >> /etc/hosts"
             fi
         done
