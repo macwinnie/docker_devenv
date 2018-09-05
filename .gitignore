@@ -5,9 +5,11 @@ init/container/*/*.sh
 !init/container/default/anything.sh
 !init/container/default/phpmyadmin.sh
 !init/container/default/portainer.sh
+!init/container/atlassian/*
 init/config/networks
 persistentdata
 !persistentdata/.gitadd
 images
 !images/.gitadd
 old.*
+.DS_Store
