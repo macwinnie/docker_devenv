@@ -5,6 +5,7 @@ init/container/*/*.sh
 !init/container/default/anything.sh
 !init/container/default/phpmyadmin.sh
 !init/container/default/portainer.sh
+!init/container/it-e/*
 !init/container/atlassian/*
 init/config/networks
 persistentdata
