@@ -84,4 +84,12 @@ echo "alias cntmanage='${SCRIPT_PATH}manage.sh'" >> $DEF_DST
 echo "alias cntcreate='${SCRIPT_PATH}create.sh'" >> $DEF_DST
 ```
 
+#### Using our internal zsh-config
+
+```sh
+SCRIPT_PATH="$( pwd -P )/init/"
+alias cntmanage=$SCRIPT_PATH'manage.sh'
+alias cntmanage=$SCRIPT_PATH'create.sh'
+```
+
 ATTENTION: you probably have to adjust the `DEF_DST` variable to match your preferred destination for the aliases – i.e. `~/.zprofile` if you are using `zsh`.
