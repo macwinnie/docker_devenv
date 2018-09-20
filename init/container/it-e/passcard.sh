@@ -35,7 +35,7 @@ if checkRunning "$docker_name"; then
       $image
 
     echo -e "\033[31mDo not forget to check out PassCard sourcecode:"
-    echo -e "git clone ssh://git@bitbucket.it-economics.de:7999/infra/passcard.git $DATA_PATH/it-e/passcard/laravel\033[0m"
+    echo -e "git clone https://bitbucket.it-economics.de/scm/infra/passcard.git $DATA_PATH/it-e/passcard/laravel\033[0m"
 
     controllNetwork "internal" "$docker_name"
     controllNetwork "traefik" "$docker_name"
