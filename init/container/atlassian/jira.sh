@@ -10,7 +10,9 @@ source $SCRIPT_PATH/config/require.sh
 isContainerRunning "system/traefik"
 isContainerRunning "atlassian/postgres"
 
-docker_name="atlassian.jira"
+cnt_group="atlassian"
+cnt_name="jira"
+docker_name="$cnt_group.$cnt_name"
 image="iteconomics/jira-ite"
 
 local_domain='jira.local'
@@ -24,7 +26,7 @@ if checkRunning "$docker_name"; then
       --name $docker_name \
       --memory 2048m \
       --restart unless-stopped \
-      --volume $DATA_PATH/atlassian/jira/data:/var/atlassian/application-data/jira:rw \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/data:/var/atlassian/application-data/jira:rw \
       --env JAVA_OPTS="-Xms1024m -Xmx1024m -Djdk.tls.trustNameService=true" \
       --label traefik.frontend.rule="Host:$local_domain" \
       --label traefik.frontend.entryPoints=http \
