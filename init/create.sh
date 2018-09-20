@@ -222,7 +222,7 @@ if ask 'Are there folders and / or files you want to mount? (y)' Y; then
         echotask 'Please enter the path on the host:'
         readVar HELPER1
         if ask 'Your path was relative to the docker project folder? (y)' Y; then
-            HELPER1='$DATA_PATH/$cgroup/$cname/'"$HELPER1"
+            HELPER1='$DATA_PATH/$cnt_group/$cnt_name/'"$HELPER1"
         elif ask 'Did you enter the name for a Docker Volume? (n)' N; then
             HELPER_DOCKER_VOLUMES+=( "$HELPER1" )
         fi

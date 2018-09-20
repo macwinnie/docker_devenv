@@ -19,7 +19,7 @@ if checkRunning $docker_name; then
 
     tomlPath="$DATA_PATH$cnt_group/$cnt_name"
     tomlFile=$tomlPath'/traefik.toml'
-    if [ ! -f "$tomlFile" ]; then
+    if [ ! -f "$tomlFile" ] || ask 'Rewrite traefik.toml file? (n)' N; then
         mkdir -p "$tomlPath"
         touch "$tomlFile"
         j2 $SCRIPT_PATH/templates/traefik.toml.j2 > $tomlFile

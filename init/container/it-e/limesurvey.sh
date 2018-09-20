@@ -32,7 +32,7 @@ if checkRunning "$docker_name"; then
       --env "LIMESURVEY_ADMIN_MAIL=mwinter@it-economics.de" \
       --env "ADMIN_THEME_NAME=iteconomics" \
       --env "DEFAULT_TEMPLATE=iteconomics" \
-      --env "LDAP_SERVER=ldaps:\\/\\/ldap-test.it-economics.de" \
+      --env "LDAP_SERVER=ldaps:\\/\\/ldap-test.it-economics.de:40636" \
       --env "LDAP_PORT=40636" \
       --env "LDAP_TLS=1" \
       --env "LDAP_ALLOW_CREATION_TO_LOGGEDIN=1" \
@@ -50,6 +50,10 @@ if checkRunning "$docker_name"; then
       --label traefik.backend="it-e: LimeSurvey" \
       --label traefik.port=80 \
       $image
+
+    echo -e "\033[31mDo not forget to check out sourcecode:"
+    echo -e "git clone ssh://git@bitbucket.it-economics.de:7999/infra/limesurvey-it-e-admin-theme.git $DATA_PATH/it-e/limesurvey/themes/admin"
+    echo -e "git clone ssh://git@bitbucket.it-economics.de:7999/infra/limesurvey-it-e-survey-theme.git $DATA_PATH/it-e/limesurvey/themes/survey\033[0m"
 
     controllNetwork "internal" "$docker_name"
     controllNetwork "traefik" "$docker_name"

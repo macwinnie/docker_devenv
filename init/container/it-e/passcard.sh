@@ -9,7 +9,9 @@ source $SCRIPT_PATH/config/require.sh
 isContainerRunning "system/traefik"
 #isContainerRunning "system/database"
 
-docker_name="it-e.passcard"
+cnt_group="it-e"
+cnt_name="passcard"
+docker_name="$cnt_group.$cnt_name"
 image="iteconomics/apache:php7.2"
 
 local_domain='passcard.local'
@@ -20,8 +22,8 @@ if checkRunning "$docker_name"; then
     docker run --detach \
       --name $docker_name \
       --restart unless-stopped \
-      --volume $DATA_PATH/it-e/passcard/laravel:/var/www/html:rw \
-      --volume $DATA_PATH/it-e/passcard/logs:/var/log/apache2:rw \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/laravel:/var/www/html:rw \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/logs:/var/log/apache2:rw \
       --env PHP_XDEBUG=1 \
       --env XDEBUG_IDE_KEY="$local_domain" \
       --env APACHE_PUBLIC_DIR="/var/www/html/public" \

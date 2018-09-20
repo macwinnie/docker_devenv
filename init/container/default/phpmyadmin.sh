@@ -24,7 +24,7 @@ if checkRunning "$docker_name"; then
       --name $docker_name \
       --restart always \
       --volume $DATA_PATH/$cnt_group/$cnt_name/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro \
-      --env PMA_HOST=database \
+      --env PMA_HOST="system.database" \
       --env PMA_USER=root \
       --env PMA_PASSWORD=Def12345 \
       --label conf \
