@@ -28,7 +28,7 @@ if checkRunning "$docker_name"; then
       --volume $DATA_PATH/atlassian/postgres/multidb:/docker-entrypoint-initdb.d:ro \
       --env POSTGRES_PASSWORD=Def12345 \
       --env POSTGRES_USER=postgres \
-      --env POSTGRES_MULTIPLE_DATABASES=confluence,jira \
+      --env POSTGRES_MULTIPLE_DATABASES=bamboo,bitbucket,confluence,jira \
       --label traefik.enable=false \
       $image
 fi
