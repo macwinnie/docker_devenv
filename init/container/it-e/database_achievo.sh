@@ -29,3 +29,4 @@ if checkRunning "$docker_name"; then
       --label traefik.enable=false \
       $image
 fi
+
