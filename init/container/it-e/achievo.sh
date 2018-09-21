@@ -40,3 +40,4 @@ if checkRunning "$docker_name"; then
     controllNetwork "internal" "$docker_name"
     controllNetwork "traefik" "$docker_name"
 fi
+
