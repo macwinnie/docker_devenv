@@ -7,7 +7,7 @@ fi
 
 source $SCRIPT_PATH/config/require.sh
 isContainerRunning "system/traefik"
-isContainerRunning "system/databaseAchievo"
+isContainerRunning "it-e/database_achievo"
 
 cnt_group="it-e"
 cnt_name="achievo"
@@ -18,7 +18,7 @@ local_domain='achievo.local'
 register_host $local_domain
 
 if checkRunning "$docker_name"; then
-    docker pull $image
+    pullImage $image
     docker run --detach \
       --name $docker_name \
       --restart unless-stopped \
