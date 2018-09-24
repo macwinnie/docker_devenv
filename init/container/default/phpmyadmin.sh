@@ -15,8 +15,8 @@ cnt_name="phpmyadmin"
 docker_name="$cnt_group.$cnt_name"
 image="phpmyadmin/phpmyadmin"
 
-local_domain='pma.local'
-register_host $local_domain
+local_domain='pma'
+register_host $local_domain # will be appended by ".$LOCAL_WILDCARD"!
 
 if checkRunning "$docker_name"; then
     pullImage $image
@@ -28,7 +28,7 @@ if checkRunning "$docker_name"; then
       --env PMA_USER=root \
       --env PMA_PASSWORD=Def12345 \
       --label conf \
-      --label traefik.frontend.rule="Host:$local_domain" \
+      --label traefik.frontend.rule="Host:$(build_url $local_domain)" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
       --label traefik.backend="default: phpMyAdmin" \

@@ -12,8 +12,8 @@ cnt_name="traefik"
 docker_name="$cnt_group.$cnt_name"
 image="traefik"
 
-local_domain='traefik.local'
-register_host $local_domain
+local_domain='traefik,thirdparty.kuechenquarks'
+register_host $local_domain # will be appended by ".$LOCAL_WILDCARD"!
 
 if checkRunning $docker_name; then
 
@@ -32,7 +32,7 @@ if checkRunning $docker_name; then
       -p 80:80 \
       --volume /var/run/docker.sock:/var/run/docker.sock:rw \
       --volume $DATA_PATH/$cnt_group/$cnt_name/traefik.toml:/traefik.toml:ro \
-      --label traefik.frontend.rule="Host:$local_domain" \
+      --label traefik.frontend.rule="Host:$(build_url $local_domain)" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
       --label traefik.backend="system: Traefik" \

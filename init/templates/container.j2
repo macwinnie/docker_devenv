@@ -21,7 +21,7 @@ docker_name="$cnt_group.$cnt_name"
 image="{% if DOCKER_REG is defined %}{{ DOCKER_REG }}/{% endif %}{% if DOCKER_USER is defined %}{{ DOCKER_USER }}/{% endif %}{{ DOCKER_IMG }}{% if DOCKER_VERSION is defined %}:{{ DOCKER_VERSION }}{% endif %}"
 
 {% if TRAEFIK_HOST is defined %}local_domain='{{ TRAEFIK_HOST }}'
-register_host $local_domain
+register_host $local_domain # will be appended by ".$LOCAL_WILDCARD"!
 {% endif %}
 
 {%- if VOLUMES is defined %}

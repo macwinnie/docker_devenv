@@ -15,8 +15,8 @@ cnt_name="bitbucket"
 docker_name="$cnt_group.$cnt_name"
 image="iteconomics/bitbucket"
 
-local_domain='bitbucket.local'
-register_host $local_domain
+local_domain='bitbucket'
+register_host $local_domain # will be appended by ".$LOCAL_WILDCARD"!
 
 if checkRunning "$docker_name"; then
 
@@ -30,7 +30,7 @@ if checkRunning "$docker_name"; then
       --restart unless-stopped \
       --volume $DATA_PATH/$cnt_group/$cnt_name/data:/var/atlassian/application-data/bitbucket:rw \
       --env JAVA_OPTS="-Xms2048m -Xmx2048m -Djdk.tls.trustNameService=true -Duser.timezone=Europe/Berlin" \
-      --label traefik.frontend.rule="Host:$local_domain" \
+      --label traefik.frontend.rule="Host:$(build_url $local_domain)" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
       --label traefik.backend="Atlassian: Bitbucket" \

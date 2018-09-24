@@ -260,7 +260,7 @@ if ask 'One more thing: Do you want your container to publish through Træfik? (
     else
         setVar "TRAEFIK_PORT" 80
     fi
-    HELPER_DOCKER_LABELS+=( 'traefik.frontend.rule="Host:$local_domain"' 'traefik.frontend.entryPoints=http' 'traefik.docker.network=$NETWORK_TRAEFIK' 'traefik.backend="'"$CONTAINER_GROUP: $TRAEFIK_BACKEND"'"' 'traefik.port='"$TRAEFIK_PORT" )
+    HELPER_DOCKER_LABELS+=( 'traefik.frontend.rule="Host:$(build_url $local_domain)"' 'traefik.frontend.entryPoints=http' 'traefik.docker.network=$NETWORK_TRAEFIK' 'traefik.backend="'"$CONTAINER_GROUP: $TRAEFIK_BACKEND"'"' 'traefik.port='"$TRAEFIK_PORT" )
 else
     HELPER_DOCKER_LABELS+=( "traefik.enable=false" )
 fi

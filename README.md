@@ -50,7 +50,26 @@ Required are:
 
 The Scripts should be located in an Dev-Folder – i.e. `~/Development/init_docker`. There will be created a folder structure under `~/Development/container` (directory `container` placed in the parent folder of `init_docker` directory) where Container-Data will live in.
 
-After installation by `git clone https://github.com/macwinnie/docker_devenv.git ~/Development/init_docker`, you can do the following:
+After installation by `git clone https://github.com/macwinnie/docker_devenv.git ~/Development/init_docker`, you can do the following – from without the source dir `~/Development/init_docker` within your terminal:
+
+### additional configuration
+
+In some case, you may want to change some default configuration (see within `init/config/variables.sh`). You may do it by overwriting them within a custom `init/config/custom_vars.sh` file, i.e.:
+
+```sh
+#!/bin/bash
+
+# secure the script for not being run directly
+if [ -z ${SCRIPT_PATH+x} ]; then
+    echo "do not run this script directly!"
+    exit 1
+fi
+
+# definition of variables
+LOCAL_WILDCARD='docker' # defaults to 'local', so that a domain would look like `url.local`
+```
+
+You don't need to change the file permission of this file since it will be included!
 
 ### Create a new Container-Definition-File
 

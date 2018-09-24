@@ -13,8 +13,8 @@ isContainerRunning "system/database"
 docker_name="it-e.limesurvey"
 image="iteconomics/limesurvey"
 
-local_domain='ite-survey.local'
-register_host $local_domain
+local_domain='ite-survey'
+register_host $local_domain # will be appended by ".$LOCAL_WILDCARD"!
 
 if checkRunning "$docker_name"; then
     docker pull $image
@@ -44,7 +44,7 @@ if checkRunning "$docker_name"; then
       --env LDAP_BIND_DN="cn=directory,ou=accounts,dc=it-economics,dc=de" \
       --env LDAP_BIND_PASS="dD1!PTuJUVQyDMbP^m" \
       --env "LIMESURVEY_DEBUG=2" \
-      --label traefik.frontend.rule="Host:$local_domain" \
+      --label traefik.frontend.rule="Host:$(build_url $local_domain)" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
       --label traefik.backend="it-e: LimeSurvey" \

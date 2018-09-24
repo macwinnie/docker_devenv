@@ -14,8 +14,8 @@ cnt_name="achievo2"
 docker_name="$cnt_group.$cnt_name"
 image="iteconomics/apache:php7.2"
 
-local_domain='achievo2.local'
-register_host $local_domain
+local_domain='achievo2'
+register_host $local_domain # will be appended by ".$LOCAL_WILDCARD"!
 
 if checkRunning "$docker_name"; then
     docker pull $image
@@ -25,9 +25,9 @@ if checkRunning "$docker_name"; then
       --volume $DATA_PATH/$cnt_group/$cnt_name/laravel:/var/www/html:rw \
       --volume $DATA_PATH/$cnt_group/$cnt_name/logs:/var/log/apache2:rw \
       --env PHP_XDEBUG=1 \
-      --env XDEBUG_IDE_KEY="$local_domain" \
+      --env XDEBUG_IDE_KEY="$(build_url $local_domain)" \
       --env APACHE_PUBLIC_DIR="/var/www/html/public" \
-      --label traefik.frontend.rule="Host:$local_domain" \
+      --label traefik.frontend.rule="Host:$(build_url $local_domain)" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
       --label traefik.backend="it-e: Achievo2" \

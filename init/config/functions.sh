@@ -53,7 +53,7 @@ echoinfo() {
 register_host() {
     while IFS=',' read -ra hosts; do
         for i in "${hosts[@]}"; do
-            pattern="127.0.0.1  $i"
+            pattern="$LOCAL_IP  $(build_url $i)"
             if ! grep -q "$pattern" /etc/hosts; then
                  echo -e "\033[31mSince we need to edit your /etc/hosts file, you probably will"
                  echo -e "be asked to enter your SUDO-Password now ... \033[0m"
@@ -61,6 +61,18 @@ register_host() {
             fi
         done
     done <<< "$1"
+}
+
+build_url () {
+    rest="$1"
+    URLS=()
+    while [ -n "$rest" ] ; do
+        str=${rest%%,*}  # Everything up to the first ','
+        # Trim up to the first ',' -- and handle final case, too.
+        URLS+=($str'.'$LOCAL_WILDCARD)
+        [ "$rest" = "${rest/,/}" ] && rest="" || rest=${rest#*,}
+    done
+    echo $(join_by ',' $(for f in "${URLS[@]}"; do echo -n "$f "; done))
 }
 
 UNSETVARS=( 'UNSETVARS' )

@@ -1,5 +1,6 @@
 src
 init/container/*/*.sh
+!init/container/system/dns.sh
 !init/container/system/traefik.sh
 !init/container/system/database.sh
 !init/container/default/anything.sh
@@ -8,6 +9,7 @@ init/container/*/*.sh
 !init/container/it-e/*
 !init/container/atlassian/*
 init/config/networks
+init/config/custom_vars.sh
 persistentdata
 !persistentdata/.gitadd
 images

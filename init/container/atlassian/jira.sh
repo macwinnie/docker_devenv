@@ -15,8 +15,8 @@ cnt_name="jira"
 docker_name="$cnt_group.$cnt_name"
 image="iteconomics/jira-ite"
 
-local_domain='jira.local'
-register_host $local_domain
+local_domain='jira'
+register_host $local_domain # will be appended by ".$LOCAL_WILDCARD"!
 
 if checkRunning "$docker_name"; then
 
@@ -28,7 +28,7 @@ if checkRunning "$docker_name"; then
       --restart unless-stopped \
       --volume $DATA_PATH/$cnt_group/$cnt_name/data:/var/atlassian/application-data/jira:rw \
       --env JAVA_OPTS="-Xms1024m -Xmx1024m -Djdk.tls.trustNameService=true" \
-      --label traefik.frontend.rule="Host:$local_domain" \
+      --label traefik.frontend.rule="Host:$(build_url $local_domain)" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
       --label traefik.backend="Atlassian: Jira" \

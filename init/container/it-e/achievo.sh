@@ -14,8 +14,8 @@ cnt_name="achievo"
 docker_name="$cnt_group.$cnt_name"
 image="iteconomics/apache:php5.6"
 
-local_domain='achievo.local'
-register_host $local_domain
+local_domain='achievo'
+register_host $local_domain # will be appended by ".$LOCAL_WILDCARD"!
 
 if checkRunning "$docker_name"; then
     pullImage $image
@@ -25,8 +25,8 @@ if checkRunning "$docker_name"; then
       --volume $DATA_PATH/$cnt_group/$cnt_name/code:/var/www/html:rw \
       --volume $DATA_PATH/$cnt_group/$cnt_name/logs:/var/log/apache2:rw \
       --env PHP_XDEBUG=1 \
-      --env XDEBUG_IDE_KEY="$local_domain" \
-      --label traefik.frontend.rule="Host:$local_domain" \
+      --env XDEBUG_IDE_KEY="$(build_url $local_domain)" \
+      --label traefik.frontend.rule="Host:$(build_url $local_domain)" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
       --label traefik.backend="it-e: Achievo" \
@@ -40,4 +40,3 @@ if checkRunning "$docker_name"; then
     controllNetwork "internal" "$docker_name"
     controllNetwork "traefik" "$docker_name"
 fi
-
