@@ -1,7 +1,5 @@
 # Docker Dev-Env
 
-Maintainer: @macwinnie <git@macwinnie.me>
-
 ## System-Requirements
 
 This Environment is thought to set up a web development environment on MacOS and Debian Linux systems. It does not provide any IDE, Docker-Host-Installation, etc.
@@ -50,7 +48,7 @@ Required are:
 
 The Scripts should be located in an Dev-Folder – i.e. `~/Development/init_docker`. There will be created a folder structure under `~/Development/container` (directory `container` placed in the parent folder of `init_docker` directory) where Container-Data will live in.
 
-After installation by `git clone https://github.com/macwinnie/docker_devenv.git ~/Development/init_docker`, you can do the following – from without the source dir `~/Development/init_docker` within your terminal:
+After installation by `git clone ssh://git@bitbucket.it-economics.de:7999/infra/docker-development-environment.git ~/Development/init_docker`, you can do the following – from without the source dir `~/Development/init_docker` within your terminal:
 
 ### additional configuration
 
