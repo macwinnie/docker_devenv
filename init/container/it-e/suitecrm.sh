@@ -10,7 +10,7 @@ isContainerRunning "system/traefik"
 isContainerRunning "system/database"
 
 cnt_group="it-e"
-cnt_name="suite"
+cnt_name="suitecrm"
 docker_name="$cnt_group.$cnt_name"
 image="iteconomics/apache:php7.0"
 
@@ -22,11 +22,12 @@ if checkRunning "$docker_name"; then
     docker run --detach \
       --name $docker_name \
       --restart unless-stopped \
-      --volume $DATA_PATH/$cnt_group/$cnt_name/code:/var/www/html:rw \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/code:/var/www/html/suiteCRM/:rw \
       --volume $DATA_PATH/$cnt_group/$cnt_name/logs:/var/log/apache2:rw \
+      --volume $SCRIPT_PATH/container/$cnt_group/config/$cnt_name/php.ini:/usr/local/etc/php/conf.d/z_suite.ini:ro \
+      --env APACHE_PUBLIC_DIR="/var/www/html/suiteCRM" \
       --env PHP_XDEBUG=1 \
       --env XDEBUG_IDE_KEY="$(build_url $local_domain)" \
-      --env APACHE_PUBLIC_DIR="/var/www/html/public" \
       --label traefik.frontend.rule="Host:$(build_url $local_domain)" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
@@ -34,7 +35,7 @@ if checkRunning "$docker_name"; then
       --label traefik.port=80 \
       $image
 
-    echo -e "\033[31mDo not forget to check out suite sourcecode and follow Readme.md:"
+    echo -e "\033[31mDo not forget to check out suite sourcecode – and probably a dev database:"
     echo -e "git clone ssh://git@bitbucket.it-economics.de:7999/infra/suitecrm.git $DATA_PATH/$cnt_group/$cnt_name/code\033[0m"
 
     controllNetwork "internal" "$docker_name"
