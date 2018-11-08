@@ -15,7 +15,7 @@ docker_name="$cnt_group.$cnt_name"
 local_domain='mailtrap'
 register_host $local_domain
 
-image="eaudeweb/mailtrap"
+image="mailhog/mailhog"
 
 if checkRunning "$docker_name"; then
 
@@ -24,18 +24,18 @@ if checkRunning "$docker_name"; then
     docker run --detach \
       --name $docker_name \
       --restart unless-stopped \
-      --env MT_USER="admin" \
-      --env MT_PASSWD="Def12345" \
+      --env "MH_STORAGE=maildir" \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/data:/maildir \
       --label traefik.frontend.rule="Host:$(build_url $local_domain)" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
       --label traefik.backend="System: Mailtrap" \
-      --label traefik.port=80 \
+      --label traefik.port=8025 \
+      --health-cmd 'echo | telnet 127.0.0.1 1025' \
       $image
 
     controllNetwork "traefik" "$docker_name"
 
-    echo -e "\033[31mYou can now access RoundCube for viewing the trapped mails at http://$(build_url $local_domain)"
-    echo -e "For usage within other Docker containers use:"
-    echo -e "SMTP-Host: $docker_name:25, no authentification (user and password empty) for \"sending\" mails\033[0m"
+    echo -e "\033[31mAccess Mailtrap by http://$(build_url $local_domain)"
+    echo -e "SMTP-Host: $docker_name:1025, no authentification (user and password empty) for \"sending\" mails\033[0m"
 fi
