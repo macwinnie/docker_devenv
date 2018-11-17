@@ -20,7 +20,7 @@ register_host $local_domain # will be appended by ".$LOCAL_WILDCARD"!
 
 if checkRunning "$docker_name"; then
 
-    docker pull $image
+    pullImage $image
 
     mkdir -p $DATA_PATH/$cnt_group/$cnt_name/data/lib
 

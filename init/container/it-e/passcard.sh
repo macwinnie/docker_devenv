@@ -18,7 +18,7 @@ local_domain='passcard'
 register_host $local_domain # will be appended by ".$LOCAL_WILDCARD"!
 
 if checkRunning "$docker_name"; then
-    docker pull $image
+    pullImage $image
     docker run --detach \
       --name $docker_name \
       --restart unless-stopped \

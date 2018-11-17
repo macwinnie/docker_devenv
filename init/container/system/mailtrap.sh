@@ -19,7 +19,7 @@ image="mailhog/mailhog"
 
 if checkRunning "$docker_name"; then
 
-    docker pull $image
+    pullImage $image
 
     docker run --detach \
       --name $docker_name \

@@ -17,7 +17,7 @@ if checkRunning "$docker_name"; then
 
     controllNetwork "internal"
 
-    docker pull $image
+    pullImage $image
 
     docker run --detach \
       --name $docker_name \
