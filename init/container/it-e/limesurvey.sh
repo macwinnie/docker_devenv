@@ -32,6 +32,7 @@ if checkRunning "$docker_name"; then
       --env "LIMESURVEY_ADMIN_MAIL=mwinter@it-economics.de" \
       --env "ADMIN_THEME_NAME=iteconomics" \
       --env "DEFAULT_TEMPLATE=iteconomics" \
+      --env "LIMESURVEY_DEFAULT_LANG=de" \
       --env "LDAP_SERVER=ldaps:\\/\\/ldap-test.it-economics.de:40636" \
       --env "LDAP_PORT=40636" \
       --env "LDAP_TLS=1" \
