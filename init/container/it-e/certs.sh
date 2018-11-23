@@ -20,11 +20,12 @@ if checkRunning "$docker_name"; then
     docker run --detach \
       --name $docker_name \
       --restart unless-stopped \
-      --volume $DATA_PATH/it-e/certs/laravel:/var/www/html:rw \
+      --volume $DATA_PATH/it-e/certs/data:/var/www/html:rw \
+      --volume $DATA_PATH/it-e/certs/conf/apache.j2:/templates/apache.j2:ro \
       --volume $DATA_PATH/it-e/certs/logs:/var/log/apache2:rw \
       --env PHP_XDEBUG=1 \
       --env XDEBUG_IDE_KEY="$(build_url $local_domain)" \
-      --env APACHE_PUBLIC_DIR="/var/www/html/public" \
+      --env MODS="headers ldap authnz_ldap" \
       --label traefik.frontend.rule="Host:$(build_url $local_domain)" \
       --label traefik.frontend.entryPoints=http \
       --label traefik.docker.network=$NETWORK_TRAEFIK \
