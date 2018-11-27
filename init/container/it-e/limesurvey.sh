@@ -10,7 +10,9 @@ source $SCRIPT_PATH/config/require.sh
 isContainerRunning "system/traefik"
 isContainerRunning "system/database"
 
-docker_name="it-e.limesurvey"
+cnt_group="it-e"
+cnt_name="limesurvey"
+docker_name="$cnt_group.$cnt_name"
 image="iteconomics/limesurvey"
 
 local_domain='ite-survey'
@@ -21,8 +23,8 @@ if checkRunning "$docker_name"; then
     docker run --detach \
       --name $docker_name \
       --restart unless-stopped \
-      --volume $DATA_PATH/it-e/limesurvey/themes/admin:/var/www/html/upload/admintheme/iteconomics:rw \
-      --volume $DATA_PATH/it-e/limesurvey/themes/survey:/var/www/html/upload/themes/survey/iteconomics:rw \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/themes/admin:/var/www/html/upload/admintheme/iteconomics:rw \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/themes/survey:/var/www/html/upload/themes/survey/iteconomics:rw \
       --env "DB_HOST=database" \
       --env "DB_USER=limesurvey2" \
       --env "DB_PASS=limesurvey2" \

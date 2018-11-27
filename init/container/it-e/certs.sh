@@ -9,7 +9,9 @@ source $SCRIPT_PATH/config/require.sh
 isContainerRunning "system/traefik"
 isContainerRunning "system/database"
 
-docker_name="it-e.certs"
+cnt_group="it-e"
+cnt_name="certs"
+docker_name="$cnt_group.$cnt_name"
 image="iteconomics/apache:php7.2"
 
 local_domain='certs'
@@ -20,9 +22,9 @@ if checkRunning "$docker_name"; then
     docker run --detach \
       --name $docker_name \
       --restart unless-stopped \
-      --volume $DATA_PATH/it-e/certs/data:/var/www/html:rw \
-      --volume $DATA_PATH/it-e/certs/conf/apache.j2:/templates/apache.j2:ro \
-      --volume $DATA_PATH/it-e/certs/logs:/var/log/apache2:rw \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/data:/var/www/html:rw \
+      --volume $DATA_PATH/$cnt_group/$cnt_name/logs:/var/log/apache2:rw \
+      --volume $SCRIPT_PATH/container/$cnt_group/config/$cnt_name/apache.j2:/templates/apache.j2:ro \
       --env PHP_XDEBUG=1 \
       --env XDEBUG_IDE_KEY="$(build_url $local_domain)" \
       --env MODS="headers ldap authnz_ldap" \
